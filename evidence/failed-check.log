@@ -1,0 +1,16 @@
+21:42:34 INFO    pipeline start
+21:42:34 INFO    downloading https://raw.githubusercontent.com/kyim50/fsq-places-pipeline/main/dataset/fsq_jm_places.csv (attempt 1 of 3)
+21:42:34 INFO    saved fsq_jm_places.csv: 4542749 bytes, sha256 22d2e63d52bf0787cc17d650829d6920188470dae4e38d52558edc43b8c3f69f
+21:42:34 INFO    extract: 25176 rows in the CSV
+21:42:34 WARNING injected bad data: 25181 rows now in fsq_jm_places.injected.csv
+21:42:34 INFO    raw load: 25181 rows in raw.places
+21:42:34 INFO    quality checks
+21:42:34 ERROR   check FAILED  coordinates_in_range   1 rows
+21:42:34 INFO    check passed  date_format            0 rows
+21:42:34 ERROR   check FAILED  duplicate_place_id     5 rows
+21:42:34 INFO    check passed  missing_place_id       0 rows
+21:42:34 INFO    check passed  numeric_coordinates    0 rows
+21:42:34 INFO    check passed  wrong_country          0 rows
+21:42:34 ERROR   QUALITY CHECK FAILED: coordinates_in_range (1 rows)
+21:42:34 ERROR   QUALITY CHECK FAILED: duplicate_place_id (5 rows)
+21:42:34 ERROR   load stopped, transaction rolled back, tables unchanged

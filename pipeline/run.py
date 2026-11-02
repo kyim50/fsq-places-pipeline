@@ -1,3 +1,4 @@
+import argparse
 import logging
 import sys
 import time
@@ -7,7 +8,7 @@ import psycopg
 
 from .checks import DataQualityError, run_checks
 from .config import DATABASE_URL, DATASET_SHA256, DATASET_URL, DOWNLOAD_PATH, LOG_DIR
-from .extract import count_rows, fetch_dataset
+from .extract import count_rows, fetch_dataset, inject_bad_data
 from .load import apply_schema, load_raw, transform
 
 log = logging.getLogger("pipeline")
@@ -27,13 +28,26 @@ def setup_logging():
         root.addHandler(handler)
 
 
-def main():
+def main(argv=None):
+    parser = argparse.ArgumentParser(description="Foursquare Jamaica places pipeline")
+    parser.add_argument(
+        "--inject-bad-data",
+        action="store_true",
+        help="add duplicate keys and a 0,0 coordinate so the quality checks fail",
+    )
+    args = parser.parse_args(argv)
+
     setup_logging()
     started = time.time()
     log.info("pipeline start")
     try:
         csv_path = fetch_dataset(DATASET_URL, DOWNLOAD_PATH, DATASET_SHA256)
         log.info("extract: %d rows in the CSV", count_rows(csv_path))
+        if args.inject_bad_data:
+            csv_path = inject_bad_data(csv_path)
+            log.warning(
+                "injected bad data: %d rows now in %s", count_rows(csv_path), csv_path.name
+            )
 
         with psycopg.connect(DATABASE_URL, autocommit=True) as conn:
             apply_schema(conn)

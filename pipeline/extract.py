@@ -51,3 +51,24 @@ def count_rows(path):
         if header != COLUMNS:
             raise RuntimeError(f"unexpected CSV header: {header}")
         return sum(1 for _ in reader)
+
+def inject_bad_data(path):
+    """Write a copy of the CSV with known problems, to show a failed check.
+
+    Adds 5 duplicate rows and moves one place to latitude 0, longitude 0.
+    """
+    with open(path, newline="", encoding="utf-8") as f:
+        reader = csv.reader(f)
+        header = next(reader)
+        rows = list(reader)
+
+    lat, lon = header.index("latitude"), header.index("longitude")
+    rows[10][lat], rows[10][lon] = "0.0", "0.0"
+    rows.extend([list(row) for row in rows[:5]])
+
+    out = path.with_name("fsq_jm_places.injected.csv")
+    with open(out, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(header)
+        writer.writerows(rows)
+    return out

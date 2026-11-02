@@ -1,0 +1,7 @@
+venv/
+.git/
+data/
+logs/
+dataset/
+__pycache__/
+*.pyc

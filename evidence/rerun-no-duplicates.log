@@ -1,0 +1,15 @@
+21:42:32 INFO    pipeline start
+21:42:32 INFO    downloading https://raw.githubusercontent.com/kyim50/fsq-places-pipeline/main/dataset/fsq_jm_places.csv (attempt 1 of 3)
+21:42:32 INFO    saved fsq_jm_places.csv: 4542749 bytes, sha256 22d2e63d52bf0787cc17d650829d6920188470dae4e38d52558edc43b8c3f69f
+21:42:32 INFO    extract: 25176 rows in the CSV
+21:42:32 INFO    raw load: 25176 rows in raw.places
+21:42:32 INFO    quality checks
+21:42:32 INFO    check passed  coordinates_in_range   0 rows
+21:42:32 INFO    check passed  date_format            0 rows
+21:42:32 INFO    check passed  duplicate_place_id     0 rows
+21:42:32 INFO    check passed  missing_place_id       0 rows
+21:42:32 INFO    check passed  numeric_coordinates    0 rows
+21:42:32 INFO    check passed  wrong_country          0 rows
+21:42:33 INFO    clean load: 43 dropped (outside island box), 0 inserted, 0 updated, 25133 unchanged
+21:42:33 INFO    clean.places now holds 25133 rows
+21:42:33 INFO    pipeline finished OK in 0.8s
